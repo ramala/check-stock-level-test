@@ -10,7 +10,7 @@ CREATE TABLE PRODUCT_RULES (
 );
 
 CREATE TABLE STOCK_CHECK_ADVICE_AUDIT (
-  advice_created_time TIMESTAMP NOT NULL,
+  advice_created_date DATE NOT NULL,
   advice_given JSON NOT NULL
 );
 

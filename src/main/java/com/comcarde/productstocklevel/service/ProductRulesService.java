@@ -1,11 +1,12 @@
 package com.comcarde.productstocklevel.service;
 
-import com.comcarde.productstocklevel.model.ProductRules;
-import com.comcarde.productstocklevel.repository.ProductRulesRepository;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import com.comcarde.productstocklevel.exception.ProductRulesNotFoundException;
+import com.comcarde.productstocklevel.model.ProductRules;
+import com.comcarde.productstocklevel.repository.ProductRulesRepository;
 
 @Service
 public class ProductRulesService {
@@ -17,5 +18,42 @@ public class ProductRulesService {
         List<ProductRules> productRules = productRulesRepository.findAll();
 
         return productRules;
+    }
+
+    public ProductRules findProductRulesByProductName(String productName) throws ProductRulesNotFoundException {
+
+        Optional<ProductRules> product = productRulesRepository.findById(productName);
+
+        if (product.isPresent()) {
+            return product.get();
+        } else {
+            throw new ProductRulesNotFoundException(String.format("No product rules found for product name: %s", productName));
+        }
+    }
+
+    public ProductRules createOrUpdateProductRules(ProductRules productRules) {
+        Optional<ProductRules> optionalProductRules = productRulesRepository.findById(productRules.getProductName());
+
+        if (optionalProductRules.isPresent()) {
+            ProductRules newProductRules = optionalProductRules.get();
+            newProductRules.setProductName(productRules.getProductName());
+            newProductRules.setMinimumStockLevel(productRules.getMinimumStockLevel());
+            newProductRules.setProductBlocked(productRules.isProductBlocked());
+            newProductRules.setAdditionalVolume(productRules.getAdditionalVolume());
+            productRulesRepository.save(newProductRules);
+            return newProductRules;
+        } else {
+            productRules = productRulesRepository.save(productRules);
+            return productRules;
+        }
+    }
+
+    public void deleteProduct(String productName) throws ProductRulesNotFoundException {
+        Optional<ProductRules> product = productRulesRepository.findById(productName);
+        if (product.isPresent()) {
+            productRulesRepository.deleteById(productName);
+        } else {
+            throw new ProductRulesNotFoundException(String.format("No product rules exists for product name: %s", productName));
+        }
     }
 }

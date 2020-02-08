@@ -13,6 +13,10 @@ public class Product {
     @Column(name = "current_stock")
     private int currentStock;
 
+    public Product() {
+        super();
+    }
+
     public Product(String productName, int quantityToOrder) {
         this.productName = productName;
         this.currentStock = quantityToOrder;

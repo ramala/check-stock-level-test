@@ -22,6 +22,10 @@ public class ProductRules {
     @Column(name = "additional_volume")
     private int additionalVolume;
 
+    public ProductRules() {
+        super();
+    }
+
     public ProductRules(String productName, int minimumStock, boolean productBlocked, int additionalVolume) {
         this.productName = productName;
         this.minimumStockLevel = minimumStock;
