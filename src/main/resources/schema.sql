@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS PRODUCT_RULE;
+DROP TABLE IF EXISTS PRODUCT;
+DROP TABLE IF EXISTS STOCK_CHECK_ADVICE_AUDIT;
+
+CREATE TABLE PRODUCT_RULES (
+  product_name VARCHAR(20) PRIMARY KEY,
+  minimum_stock_level NUMBER(2) NOT NULL,
+  product_blocked BOOLEAN,
+  additional_volume number(3)
+);
+
+CREATE TABLE STOCK_CHECK_ADVICE_AUDIT (
+  advice_created_time TIMESTAMP NOT NULL,
+  advice_given JSON NOT NULL
+);
+
+CREATE TABLE PRODUCT (
+  product_name VARCHAR(20) NOT NULL,
+  current_stock NUMBER(2) NOT NULL
+);

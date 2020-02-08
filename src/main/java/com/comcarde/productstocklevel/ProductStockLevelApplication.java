@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ProductStockLevelApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProductStockLevelApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ProductStockLevelApplication.class, args);
+    }
 
 }
