@@ -199,6 +199,7 @@ I would check with BA for requirements clarification but made an assumption here
  I would use may be **Drools rules engine** or easy rules with method chaining.
  Security implementation by role based access to end points
  API documentation will be provided in confluence
+ could add more unit tests, like MockMvc tests, integration test etc 
  I would also set up a cucumber project with one happy path so that QA's can build on top of it
  UI interface using thymeleaf or react or angular
  
@@ -210,6 +211,7 @@ I would check with BA for requirements clarification but made an assumption here
  
  Spring recommends constructor injects rather than @Autowiring so used constructors. The Spring team generally advocates constructor 
  injection as it enables one to implement application components as immutable objects and to ensure that required dependencies are not null.
+ Also enforces single responsibility principle of SOLID principles.
  
  
  
