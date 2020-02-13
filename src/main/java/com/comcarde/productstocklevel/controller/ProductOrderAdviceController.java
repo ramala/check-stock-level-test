@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.comcarde.productstocklevel.delegate.ProductOrderAdviceDelegate;
+import com.comcarde.productstocklevel.exception.ProductAdviceJsonProcessingException;
 import com.comcarde.productstocklevel.model.CheckStockResponse;
 
 @RestController
@@ -18,7 +19,7 @@ public class ProductOrderAdviceController {
     }
 
     @GetMapping("/product-order-advice")
-    public ResponseEntity<CheckStockResponse> getProductOrderAdvice() {
+    public ResponseEntity<CheckStockResponse> getProductOrderAdvice() throws ProductAdviceJsonProcessingException {
 
         CheckStockResponse response = productOrderAdviceDelegate.prepareStockCheckResponse();
         return new ResponseEntity<>(response, new HttpHeaders(), HttpStatus.OK);

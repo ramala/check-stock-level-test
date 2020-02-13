@@ -3,8 +3,8 @@ package com.comcarde.productstocklevel.delegate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.comcarde.productstocklevel.exception.ProductAdviceJsonProcessingException;
 import com.comcarde.productstocklevel.model.CheckStockResponse;
 import com.comcarde.productstocklevel.model.Product;
 import com.comcarde.productstocklevel.model.ProductRules;
@@ -19,18 +19,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class ProductOrderAdviceDelegate {
 
-
-    @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
     private ProductRulesRepository productRulesRepository;
-
-    @Autowired
     private ProductOrderAdviceRepository productOrderAdviceRepository;
 
+    public ProductOrderAdviceDelegate(ProductRepository productRepository, ProductRulesRepository productRulesRepository, ProductOrderAdviceRepository productOrderAdviceRepository) {
+        this.productRepository = productRepository;
+        this.productRulesRepository = productRulesRepository;
+        this.productOrderAdviceRepository = productOrderAdviceRepository;
+    }
 
-    public CheckStockResponse prepareStockCheckResponse() {
+
+    public CheckStockResponse prepareStockCheckResponse() throws ProductAdviceJsonProcessingException {
         List<Product> productList = productRepository.findAll();
         List<ProductRules> productRulesList = productRulesRepository.findAll();
         CheckStockResponse response = new CheckStockResponse();
@@ -48,7 +48,7 @@ public class ProductOrderAdviceDelegate {
         try {
             stockCheckAdvice.setAdvicePayload(new ObjectMapper().writeValueAsString(response));
         } catch (JsonProcessingException e) {
-            //TODO throw new exception here
+            throw new ProductAdviceJsonProcessingException("Not able to write stock check advice payload to object");
         }
         productOrderAdviceRepository.save(stockCheckAdvice);
         return response;

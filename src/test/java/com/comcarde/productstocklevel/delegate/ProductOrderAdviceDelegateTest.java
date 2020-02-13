@@ -1,18 +1,24 @@
 package com.comcarde.productstocklevel.delegate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import com.comcarde.productstocklevel.exception.ProductAdviceJsonProcessingException;
 import com.comcarde.productstocklevel.model.CheckStockResponse;
 import com.comcarde.productstocklevel.model.Product;
 import com.comcarde.productstocklevel.model.ProductRules;
+import com.comcarde.productstocklevel.model.StockCheckAdvice;
+import com.comcarde.productstocklevel.repository.ProductOrderAdviceRepository;
 import com.comcarde.productstocklevel.repository.ProductRepository;
 import com.comcarde.productstocklevel.repository.ProductRulesRepository;
 
@@ -21,16 +27,20 @@ class ProductOrderAdviceDelegateTest {
 
     @Mock
     private ProductRepository productRepository;
-
     @Mock
     private ProductRulesRepository productRulesRepository;
+    @Mock
+    private ProductOrderAdviceRepository productOrderAdviceRepository;
+
+    @Captor
+    ArgumentCaptor<StockCheckAdvice> stockCheckAdviceCaptor;
 
     @InjectMocks
     ProductOrderAdviceDelegate testee;
 
 
     @Test
-    void testPrepareStockCheckResponse() {
+    void testPrepareStockCheckResponse() throws ProductAdviceJsonProcessingException {
         List<Product> productList = new ArrayList<>();
         productList.add(new Product("a", 5));
         productList.add(new Product("b", 8));
@@ -53,5 +63,10 @@ class ProductOrderAdviceDelegateTest {
         assertEquals(response.getToBeOrderdList().get(0).getQuantity(), 23);
         assertEquals(response.getToBeOrderdList().get(1).getProductName(), "e");
         assertEquals(response.getToBeOrderdList().get(1).getQuantity(), 3);
+
+        verify(productOrderAdviceRepository).save(stockCheckAdviceCaptor.capture());
+
+        StockCheckAdvice captorValue = stockCheckAdviceCaptor.getValue();
+        assertEquals(captorValue.getAdvicePayload(), "{\"toBeOrderdList\":[{\"productName\":\"d\",\"quantity\":23},{\"productName\":\"e\",\"quantity\":3}]}");
     }
 }
