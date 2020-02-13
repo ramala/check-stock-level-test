@@ -40,15 +40,13 @@ public class ProductRulesService {
             newProductRules.setMinimumStockLevel(productRules.getMinimumStockLevel());
             newProductRules.setProductBlocked(productRules.isProductBlocked());
             newProductRules.setAdditionalVolume(productRules.getAdditionalVolume());
-            productRulesRepository.save(newProductRules);
-            return newProductRules;
+            return productRulesRepository.save(newProductRules);
         } else {
-            productRules = productRulesRepository.save(productRules);
-            return productRules;
+            return productRulesRepository.save(productRules);
         }
     }
 
-    public void deleteProduct(String productName) throws ProductRulesNotFoundException {
+    public void deleteProductRules(String productName) throws ProductRulesNotFoundException {
         Optional<ProductRules> product = productRulesRepository.findById(productName);
         if (product.isPresent()) {
             productRulesRepository.deleteById(productName);

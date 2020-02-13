@@ -1,17 +1,14 @@
 package com.comcarde.productstocklevel.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.comcarde.productstocklevel.exception.ProductNotFoundException;
 import com.comcarde.productstocklevel.model.Product;
@@ -20,20 +17,17 @@ import com.comcarde.productstocklevel.service.ProductService;
 @RestController
 public class ProductController {
 
-    @Autowired
-    ProductService productService;
+    private ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> allProducts = productService.getAllProducts();
 
         return new ResponseEntity<>(allProducts, new HttpHeaders(), HttpStatus.OK);
-    }
-
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
     }
 
     @GetMapping("/product/{productName}")
@@ -49,7 +43,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/product/{Product}")
-    public HttpStatus deleteProductById(@PathVariable("Product") String productName) throws ProductNotFoundException {
+    public HttpStatus deleteProductByProductName(@PathVariable("Product") String productName) throws ProductNotFoundException {
         productService.deleteProduct(productName);
         return HttpStatus.NO_CONTENT;
     }

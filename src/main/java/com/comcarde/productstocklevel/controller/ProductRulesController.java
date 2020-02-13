@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.comcarde.productstocklevel.exception.ProductRulesNotFoundException;
 import com.comcarde.productstocklevel.model.ProductRules;
@@ -21,7 +22,7 @@ public class ProductRulesController {
     private ProductRulesService productRulesService;
 
     @GetMapping("/product/rules")
-    public ResponseEntity<List<ProductRules>> getAllProductRuless() {
+    public ResponseEntity<List<ProductRules>> getAllProductRules() {
         List<ProductRules> allProductRuless = productRulesService.getAllProductRules();
 
         return new ResponseEntity<>(allProductRuless, new HttpHeaders(), HttpStatus.OK);
@@ -34,14 +35,14 @@ public class ProductRulesController {
     }
 
     @PostMapping("/product/rules")
-    public ResponseEntity<ProductRules> createOrUpdateProductRules(ProductRules productRules) {
+    public ResponseEntity<ProductRules> createOrUpdateProductRules(@RequestBody ProductRules productRules) {
         ProductRules updatedProductRules = productRulesService.createOrUpdateProductRules(productRules);
         return new ResponseEntity<ProductRules>(updatedProductRules, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("product/rules/{productName}")
-    public HttpStatus deleteProductById(@PathVariable("productName") String productName) throws ProductRulesNotFoundException {
-        productRulesService.deleteProduct(productName);
+    public HttpStatus deleteProductRulesByProductName(@PathVariable("productName") String productName) throws ProductRulesNotFoundException {
+        productRulesService.deleteProductRules(productName);
         return HttpStatus.NO_CONTENT;
     }
 }

@@ -2,7 +2,10 @@ package com.comcarde.productstocklevel.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
@@ -58,5 +61,35 @@ class ProductServiceTest {
         Assertions.assertThrows(ProductNotFoundException.class, () -> {
             testee.findProductByName("a");
         });
+    }
+
+    @Test
+    public void testCreateOrUpdateProduct() {
+        Product product = new Product("a", 6);
+        when(productRepository.findById(eq("a"))).thenReturn(Optional.of(product));
+        when(productRepository.save(any(Product.class))).thenReturn(product);
+
+        Product readProduct = testee.createOrUpdateProduct(product);
+        assertEquals(readProduct.getProductName(), product.getProductName());
+        assertEquals(readProduct.getCurrentStock(), product.getCurrentStock());
+    }
+
+    @Test
+    void testDeleteProduct_throws_exception() {
+
+        Assertions.assertThrows(ProductNotFoundException.class, () -> {
+            testee.deleteProduct("a");
+        });
+    }
+
+    @Test
+    void testDeleteProduct() throws ProductNotFoundException {
+        Product product = new Product("a", 6);
+        when(productRepository.findById(eq("a"))).thenReturn(Optional.of(product));
+        doNothing().when(productRepository).deleteById("a");
+
+        testee.deleteProduct("a");
+        verify(productRepository).findById(eq("a"));
+        verify(productRepository).deleteById(eq("a"));
     }
 }

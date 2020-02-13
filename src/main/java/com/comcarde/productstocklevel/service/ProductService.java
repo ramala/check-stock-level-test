@@ -2,7 +2,6 @@ package com.comcarde.productstocklevel.service;
 
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.comcarde.productstocklevel.exception.ProductNotFoundException;
 import com.comcarde.productstocklevel.model.Product;
@@ -11,8 +10,10 @@ import com.comcarde.productstocklevel.repository.ProductRepository;
 @Service
 public class ProductService {
 
-    @Autowired
     private ProductRepository productRepository;
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
@@ -36,12 +37,10 @@ public class ProductService {
             Product newProduct = optionalProduct.get();
             newProduct.setProductName(product.getProductName());
             newProduct.setCurrentStock(product.getCurrentStock());
-
-            productRepository.save(newProduct);
-            return newProduct;
+            return productRepository.save(newProduct);
         } else {
-            product = productRepository.save(product);
-            return product;
+
+            return productRepository.save(product);
         }
     }
 
