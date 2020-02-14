@@ -204,7 +204,8 @@ I would check with BA for requirements clarification but made an assumption here
 - More test coverage i.e. more unit tests, like MockMvc tests, integration tests and PIT tests 
 - I would also set up a cucumber project with one happy path so that QA's can build on top of it
 - UI interface using thymeleaf or react or angular
- - For an enterprise application I wouldn't use entity objects being returned in service controllers
+- For an enterprise application I wouldn't use entity objects being returned in service controllers
+- used default date format in the database 
 - I would create a Service API package with model objects to return in response.
 - I would also use **lombok** and **mapstruct** libraries for mapping objects.
  
