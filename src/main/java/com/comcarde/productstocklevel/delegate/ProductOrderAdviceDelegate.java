@@ -29,7 +29,6 @@ public class ProductOrderAdviceDelegate {
         this.productOrderAdviceRepository = productOrderAdviceRepository;
     }
 
-
     public CheckStockResponse prepareStockCheckResponse() throws ProductAdviceJsonProcessingException {
         List<Product> productList = productRepository.findAll();
         List<ProductRules> productRulesList = productRulesRepository.findAll();

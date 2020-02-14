@@ -6,7 +6,10 @@ This is a spring boot application, uses in memory H2 database.
 # Steps to set up project:
 
 - Clone project from https://github.com/ramala/check-stock-level-test
-- Open in either IntelliJ or Eclipse as maven project
+```
+git clone https://github.com/ramala/check-stock-level-test
+```
+- Open project in either IntelliJ or Eclipse as maven project
 - Build project, cd to project directory and run below command:
 ```
 mvn clean install
@@ -42,7 +45,7 @@ INSERT INTO PRODUCT_RULES (product_name, minimum_stock_level, product_blocked, a
   ('d', 8, FALSE, 15),
   ('e', 4, FALSE, 0);
 ```
-# Rest API and Request and  Response payloads
+# Rest API and Request and Response payloads
 **Product**
 http://localhost:8080/products   **GET** method
 Returns all products (Array of products) example payload is below:
@@ -70,7 +73,6 @@ Returns all products (Array of products) example payload is below:
   }
 ]
 ```
-
 http://localhost:8080/product/{productName}   **GET** method
 E.g. http://localhost:8080/product/a
 returns only one product: as below:
@@ -195,23 +197,22 @@ I would check with BA for requirements clarification but made an assumption here
 **On top of minimum stock, this is an additional volume required.**
 
  # Enhancements
- I would use layered architecture 
- I would use may be **Drools rules engine** or easy rules with method chaining.
- Security implementation by role based access to end points
- API documentation will be provided in confluence
- could add more unit tests, like MockMvc tests, integration test etc 
- I would also set up a cucumber project with one happy path so that QA's can build on top of it
- UI interface using thymeleaf or react or angular
+- Layered architecture can be implemented 
+- I would use may be **Drools rules engine** or easy rules with method chaining.
+- Security implementation by role based access to end points
+- API documentation will be provided in confluence
+- More test coverage i.e. more unit tests, like MockMvc tests, integration tests and PIT tests 
+- I would also set up a cucumber project with one happy path so that QA's can build on top of it
+- UI interface using thymeleaf or react or angular
+ - For an enterprise application I wouldn't use entity objects being returned in service controllers
+- I would create a Service API package with model objects to return in response.
+- I would also use **lombok** and **mapstruct** libraries for mapping objects.
  
- For an enterprise application I wouldn't use entity objects being returned in service controllers
- I would create a Service API package with model objects to return in response.
- I would also use **lombok** and **mapstruct** libraries for mapping objects.
- 
- For simplicity, used java 8, and did not use new features of JAVA8, streams API, lambda functions, method reference etc
- 
- Spring recommends constructor injects rather than @Autowiring so used constructors. The Spring team generally advocates constructor 
- injection as it enables one to implement application components as immutable objects and to ensure that required dependencies are not null.
- Also enforces single responsibility principle of SOLID principles.
+# Best practices and current implementation
+- For simplicity, used java 8, and did not use new features of JAVA8, streams API, lambda functions, method reference etc
+- Spring recommends constructor injects rather than @Autowiring so used constructors. The Spring team generally advocates constructor 
+  injection as it enables one to implement application components as immutable objects and to ensure that required dependencies are not null.
+  the above also enforces single responsibility principle of SOLID principles.
  
  
  

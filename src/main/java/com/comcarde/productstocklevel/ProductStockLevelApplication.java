@@ -9,5 +9,4 @@ public class ProductStockLevelApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProductStockLevelApplication.class, args);
     }
-
 }
