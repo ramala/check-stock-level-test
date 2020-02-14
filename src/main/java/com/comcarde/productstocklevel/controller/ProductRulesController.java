@@ -37,7 +37,7 @@ public class ProductRulesController {
     @PostMapping("/product/rules")
     public ResponseEntity<ProductRules> createOrUpdateProductRules(@RequestBody ProductRules productRules) {
         ProductRules updatedProductRules = productRulesService.createOrUpdateProductRules(productRules);
-        return new ResponseEntity<ProductRules>(updatedProductRules, new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(updatedProductRules, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("product/rules/{productName}")

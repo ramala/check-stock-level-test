@@ -194,7 +194,7 @@ This table *ADVICE_PAYLOD* column is a *JSON* type.
 Third rule, order additional volume for certain products and in the example product **d** has a one of order of 15 isn't clear to me.
 I would check with BA for requirements clarification but made an assumption here that
  
-**On top of minimum stock, this is an additional volume required.**
+**On top of minimum stock, this is an additional volume required for that product.**
 
  # Enhancements
 - Layered architecture can be implemented 

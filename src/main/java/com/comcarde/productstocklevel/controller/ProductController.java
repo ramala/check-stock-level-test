@@ -39,7 +39,7 @@ public class ProductController {
     @PostMapping("/product")
     public ResponseEntity<Product> createOrUpdateProduct(@RequestBody Product product) {
         Product updated = productService.createOrUpdateProduct(product);
-        return new ResponseEntity<Product>(updated, new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/product/{Product}")

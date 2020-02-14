@@ -15,9 +15,7 @@ public class ProductRulesService {
     ProductRulesRepository productRulesRepository;
 
     public List<ProductRules> getAllProductRules() {
-        List<ProductRules> productRules = productRulesRepository.findAll();
-
-        return productRules;
+        return productRulesRepository.findAll();
     }
 
     public ProductRules findProductRulesByProductName(String productName) throws ProductRulesNotFoundException {
