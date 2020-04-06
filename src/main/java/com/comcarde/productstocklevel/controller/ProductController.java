@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.comcarde.productstocklevel.exception.ProductNotFoundException;
 import com.comcarde.productstocklevel.model.Product;
 import com.comcarde.productstocklevel.service.ProductService;
+import io.swagger.annotations.*;
 
+@Api(value="Product API")
 @RestController
 public class ProductController {
 
@@ -23,6 +25,9 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @ApiOperation(value="Returns all products with current stock levels")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message="All products and their current stock levels", response=Product.class) })
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> allProducts = productService.getAllProducts();
